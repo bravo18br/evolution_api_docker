@@ -12,6 +12,7 @@ services:
     networks:
       - postgres_net 
       - redis_net
+      - evolution_net
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://localhost:8080/manager"]
       interval: 10s
@@ -26,3 +27,7 @@ networks:
     external: true
   redis_net:
     external: true  
+  evolution_net:
+    name: evolution_net
+    driver: bridge
+    attachable: true
