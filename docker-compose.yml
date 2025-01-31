@@ -1,0 +1,28 @@
+services:
+  evolution-api:
+    container_name: evolution_api
+    image: atendai/evolution-api:v2.1.1
+    restart: always
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    volumes:
+      - evolution_instances:/evolution/instances
+    networks:
+      - postgres_net 
+      - redis_net
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8080/manager"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  evolution_instances:
+
+networks:
+  postgres_net:
+    external: true
+  redis_net:
+    external: true  
